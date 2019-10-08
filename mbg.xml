@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!-- 配置数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/db_stumanage" userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 指定javaBean生成的位置 -->
+        <javaModelGenerator targetPackage="com.bean.information"
+                            targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--指定sql映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mapper.information" targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- 指定dao接口生成的位置，mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.dao.information" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+
+        <!-- table指定每个表的生成策略 -->
+        <!--<table tableName="tb_student" domainObjectName="Student"></table>
+        <table tableName="tb_class" domainObjectName="Class"></table>
+        <table tableName="tb_college" domainObjectName="College"></table>
+        <table tableName="tb_depart" domainObjectName="Depart"></table>
+        <table tableName="tb_connect" domainObjectName="Connect"></table>-->
+        <!--<table tableName="tb_pass" domainObjectName="Pass"></table>-->
+        <!--<table tableName="tb_teacher" domainObjectName="Teacher"></table>
+        <table tableName="tb_teaPass" domainObjectName="TeaPass"></table>-->
+        <table tableName="tb_viewwork" domainObjectName="Viewwork"></table>
+    </context>
+</generatorConfiguration>

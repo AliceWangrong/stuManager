@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.information.WorkstudentMapper">
+  <resultMap id="BaseResultMap" type="com.bean.information.Workstudent">
+    <id column="work_no" jdbcType="INTEGER" property="workNo" />
+    <result column="stu_no" jdbcType="INTEGER" property="stuNo" />
+    <result column="work_url" jdbcType="VARCHAR" property="workUrl" />
+    <result column="work_data" jdbcType="VARCHAR" property="workData" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    work_no, stu_no, work_url, work_data
+  </sql>
+
+  <select id="select_all" resultMap="BaseResultMap">
+    select * from tb_workstudent
+  </select>
+  <select id="selectByKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from tb_workstudent where stu_no=#{StuNo,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.bean.information.Workstudent">
+    insert into tb_workstudent (stu_no, work_url,
+      work_data)
+    values (#{stuNo,jdbcType=INTEGER}, #{workUrl,jdbcType=VARCHAR},
+      #{workData,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>

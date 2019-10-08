@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.information.WorkaccomplishMapper">
+  <resultMap id="BaseResultMap" type="com.bean.information.Workaccomplish">
+    <result column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="work_url" jdbcType="VARCHAR" property="workUrl" />
+    <result column="finall_data" jdbcType="VARCHAR" property="finallData" />
+    <result column="stu_no" jdbcType="INTEGER" property="stuNo" />
+    <result column="read_no" jdbcType="INTEGER" property="readNo" />
+    <result column="pomt" jdbcType="VARCHAR" property="pomt" />
+    <result column="evluate" jdbcType="VARCHAR" property="evluate" />
+    <result column="evluate_data" jdbcType="VARCHAR" property="evluateData" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    work_id, work_url, finall_data, stu_no, read_no, pomt, evluate, evluate_data
+  </sql>
+  <select id="selectByExample" parameterType="com.bean.information.WorkaccomplishExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_workaccomplish
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.bean.information.WorkaccomplishExample">
+    delete from tb_workaccomplish
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bean.information.Workaccomplish">
+    insert into tb_workaccomplish (work_id, work_url, finall_data, 
+      stu_no, read_no, pomt, 
+      evluate, evluate_data)
+    values (#{workId,jdbcType=INTEGER}, #{workUrl,jdbcType=VARCHAR}, #{finallData,jdbcType=VARCHAR}, 
+      #{stuNo,jdbcType=INTEGER}, #{readNo,jdbcType=INTEGER}, #{pomt,jdbcType=VARCHAR}, 
+      #{evluate,jdbcType=VARCHAR}, #{evluateData,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.information.Workaccomplish">
+    insert into tb_workaccomplish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workId != null">
+        work_id,
+      </if>
+      <if test="workUrl != null">
+        work_url,
+      </if>
+      <if test="finallData != null">
+        finall_data,
+      </if>
+      <if test="stuNo != null">
+        stu_no,
+      </if>
+      <if test="readNo != null">
+        read_no,
+      </if>
+      <if test="pomt != null">
+        pomt,
+      </if>
+      <if test="evluate != null">
+        evluate,
+      </if>
+      <if test="evluateData != null">
+        evluate_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workId != null">
+        #{workId,jdbcType=INTEGER},
+      </if>
+      <if test="workUrl != null">
+        #{workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="finallData != null">
+        #{finallData,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null">
+        #{stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="readNo != null">
+        #{readNo,jdbcType=INTEGER},
+      </if>
+      <if test="pomt != null">
+        #{pomt,jdbcType=VARCHAR},
+      </if>
+      <if test="evluate != null">
+        #{evluate,jdbcType=VARCHAR},
+      </if>
+      <if test="evluateData != null">
+        #{evluateData,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bean.information.WorkaccomplishExample" resultType="java.lang.Long">
+    select count(*) from tb_workaccomplish
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from tb_workaccomplish
+   where stu_no = #{record.stuNo,jdbcType=INTEGER}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_workaccomplish
+    <set>
+      <if test="record.workId != null">
+        work_id = #{record.workId,jdbcType=INTEGER},
+      </if>
+      <if test="record.workUrl != null">
+        work_url = #{record.workUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finallData != null">
+        finall_data = #{record.finallData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuNo != null">
+        stu_no = #{record.stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.readNo != null">
+        read_no = #{record.readNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.pomt != null">
+        pomt = #{record.pomt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evluate != null">
+        evluate = #{record.evluate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evluateData != null">
+        evluate_data = #{record.evluateData,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_workaccomplish
+    set work_id = #{record.workId,jdbcType=INTEGER},
+      work_url = #{record.workUrl,jdbcType=VARCHAR},
+      finall_data = #{record.finallData,jdbcType=VARCHAR},
+      stu_no = #{record.stuNo,jdbcType=INTEGER},
+      read_no = #{record.readNo,jdbcType=INTEGER},
+      pomt = #{record.pomt,jdbcType=VARCHAR},
+      evluate = #{record.evluate,jdbcType=VARCHAR},
+      evluate_data = #{record.evluateData,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="updateByStudent" parameterType="java.lang.Object">
+    update tb_workaccomplish set work_url=#{workUrl,jdbcType=VARCHAR},
+    finall_data= #{finallData,jdbcType=VARCHAR},read_no=1
+    where work_id=#{workId,jdbcType=INTEGER} and stu_no=#{stuNo,jdbcType=INTEGER}
+  </update>
+  <update id="updataBypomt" parameterType="java.lang.Object">
+    update tb_workaccomplish set read_no=2, pomt=#{pomt,jdbcType=VARCHAR},
+    evluate= #{evluate,jdbcType=VARCHAR},evluate_data= #{evluate_data,jdbcType=VARCHAR}
+    where work_id=#{workId,jdbcType=INTEGER} and stu_no=#{stuNo,jdbcType=INTEGER}
+  </update>
+</mapper>

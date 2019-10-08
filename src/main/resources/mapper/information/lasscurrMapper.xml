@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.information.lasscurrMapper">
+  <resultMap id="BaseResultMap" type="com.bean.information.lasscurr">
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="curr_id" jdbcType="INTEGER" property="currId" />
+    <result column="tea_no" jdbcType="INTEGER" property="teaNo" />
+  </resultMap>
+
+  <resultMap id="BaseResult" type="com.bean.information.lasscurr">
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="curr_id" jdbcType="INTEGER" property="currId" />
+    <result column="tea_no" jdbcType="INTEGER" property="teaNo" />
+    <association property="aClass" javaType="com.bean.information.Class">
+      <id column="class_id" property="classId"/>
+      <result column="class_name" property="className"/>
+    </association>
+    <association property="curriculum" javaType="com.bean.information.Curriculum">
+      <id column="curr_id" property="currId"/>
+      <result column="curr_name" property="currName"/>
+    </association>
+    <association property="teacher" javaType="com.bean.information.Teacher">
+      <id column="tea_no" property="teaNo"/>
+      <result column="tea_name" property="teaName"/>
+    </association>
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    class_id, curr_id, tea_no
+  </sql>
+  <select id="selectBytaeno" parameterType="java.lang.Integer" resultMap="BaseResult" >
+    SELECT * FROM tb_classcurr
+    LEFT JOIN tb_curriculum ON tb_classcurr.curr_id=tb_curriculum.curr_id
+    LEFT JOIN tb_class ON tb_class.class_id=tb_curriculum.curr_id
+    LEFT JOIN tb_teacher ON tb_teacher.tea_no=tb_classcurr.tea_no
+    WHERE tb_classcurr.tea_no=#{teaNo,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.bean.information.lasscurr">
+    insert into tb_classcurr (class_id, curr_id, tea_no
+      )
+    values (#{classId,jdbcType=INTEGER}, #{currId,jdbcType=INTEGER}, #{teaNo,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bean.information.lasscurr">
+    insert into tb_classcurr
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        class_id,
+      </if>
+      <if test="currId != null">
+        curr_id,
+      </if>
+      <if test="teaNo != null">
+        tea_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="currId != null">
+        #{currId,jdbcType=INTEGER},
+      </if>
+      <if test="teaNo != null">
+        #{teaNo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

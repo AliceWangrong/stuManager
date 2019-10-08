@@ -1,0 +1,46 @@
+*{
+    margin:0 auto;
+    padding: 0px;
+}
+.body{
+background-color: #122b40;
+}
+.LoginBox{
+    width: 400px;
+    height: 300px;
+    margin-top: 150px;
+    border-radius:5px;
+    background-color: rgba(245, 245, 245, 0.24);
+
+}
+.LoginBox1{
+    width: 210px;
+    height: 200px;
+    margin-left: 70px;
+    margin-top: 25px;
+}
+.LoginBox h2{
+    text-align: center;
+    margin-top: 15px;
+}
+.InputStyle{
+    width: 250px;
+    height: 30px;
+    margin-top: 10px;
+    border-radius:5px;
+}
+.LoginBotton{
+    width: 200px;
+    height: 30px;
+    margin-left: 25px;
+    border-radius:5px;
+    outline: none;
+    border: none;
+    background-color: limegreen;
+}
+.LoginBotton p{
+    font-size: 18px;
+}
+.LoginBotton:hover{
+    background-color: #238b23;
+}

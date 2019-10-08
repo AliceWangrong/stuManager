@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+  http://www.springframework.org/schema/mvc
+  http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+  http://www.springframework.org/schema/context
+  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <!-- 视图解析器 -->
+    <context:component-scan base-package="com.handler">
+        <!--只扫描控制器-->
+        <!--<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
+    </context:component-scan>
+
+    <mvc:annotation-driven/>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--两个标签-->
+    <!--将sprinfmvc不能处理的请求交给tomcat-->
+    <mvc:default-servlet-handler/>
+   <!-- &lt;!&ndash;支持springmvc更高级的请求&ndash;&gt;-->
+    <mvc:annotation-driven/>
+
+    <!-- 定义文件上传解析器 -->
+    <context:property-placeholder location="classpath:resource.properties" />
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设定默认编码 -->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <!-- 设定文件上传的最大值(所有文件的容量之和）8MB，8*1024*1024 -->
+        <property name="maxUploadSize" value="8388608"></property>
+        <!-- 设置在文件上传时允许写到内存中的最大值，上传文件大小若小于此参数，则不会生成临时文件 -->
+        <property name="maxInMemorySize" value="2048"></property>
+    </bean>
+</beans>

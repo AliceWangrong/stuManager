@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.information.StudentMapper">
+<!--写一个全部返回map-->
+  <resultMap id="Information" type="com.bean.information.Student">
+    <id column="stu_no" jdbcType="INTEGER" property="stuNo" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="stu_college" jdbcType="INTEGER" property="stuCollege" />
+    <result column="stu_depart" jdbcType="INTEGER" property="stuDepart" />
+    <result column="stu_class" jdbcType="INTEGER" property="stuClass" />
+    <association property="college" javaType="com.bean.information.College">
+      <id column="college_Id" property="collegeId"/>
+      <result column="collage_name" property="collageName"/>
+    </association>
+    <association property="depart" javaType="com.bean.information.Depart">
+      <id column="depart_id" property="departId"/>
+      <result column="depart_name" property="departName"/>
+    </association>
+    <association property="aclass" javaType="com.bean.information.Class">
+      <id column="class_id" property="classId"/>
+      <result column="class_name" property="className"/>
+    </association>
+    <association property="connect" javaType="com.bean.information.Connect">
+      <id column="stu_no" property="stuNo"/>
+      <result column="stu_qq" property="stuQq"/>
+      <result column="stu_phone" property="stuPhone"/>
+    </association>
+  </resultMap>
+<!--写一个sql-->
+  <sql id="information">
+    tb_student.stu_no,stu_name,collage_name,depart_name,class_name,stu_phone,stu_qq
+  </sql>
+  <select id="StudentInformationAll" resultMap="Information">
+    select
+    <include refid="information" />
+    from tb_student
+    LEFT JOIN tb_connect ON tb_student.stu_no=tb_connect.stu_no
+    LEFT JOIN tb_class on tb_student.stu_class=tb_class.class_id
+    LEFT JOIN tb_college on tb_student.stu_college=tb_college.college_id
+    LEFT JOIN tb_depart on tb_student.stu_depart=tb_depart.depart_id
+  </select>
+  <select id="StudentInformationByKey" parameterType="java.lang.Integer" resultMap="Information">
+    select
+    <include refid="information" />
+    from tb_student
+    LEFT JOIN tb_connect ON tb_student.stu_no=tb_connect.stu_no
+    LEFT JOIN tb_class on tb_student.stu_class=tb_class.class_id
+    LEFT JOIN tb_college on tb_student.stu_college=tb_college.college_id
+    LEFT JOIN tb_depart on tb_student.stu_depart=tb_depart.depart_id
+    where tb_student.stu_no = #{stuNo,jdbcType=INTEGER}
+  </select>
+  <select id="StudentInformationByclassId" parameterType="java.lang.Integer" resultType="com.bean.information.Student">
+     select stu_no from tb_student where stu_class=#{stuClass}
+  </select>
+</mapper>
